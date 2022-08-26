@@ -15,7 +15,7 @@
     }
 </script>
 
-<div class="wordbar">
+<main>
     <div class="wordbar-tabs">
         <span on:click={() => activeList = 0}
             class:active="{activeList == 0}"
@@ -49,18 +49,16 @@
             </div>
         </div>
     </div>
-</div>
+</main>
 
 <style>
     textarea {
         font-family: JetBrainsMono, monospace;
     }
-    .wordbar {
-        width: 25%;
-    }
-    .wordbar {
+    main {
         display: flex;
         flex-direction: column;
+        height: 100%;
     }
     .wordbar-tabs {
         height: 45px;

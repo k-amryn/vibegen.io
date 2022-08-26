@@ -1,6 +1,8 @@
 <script lang="ts">
     import Select from '../lib/select.svelte'
     import WordSidebar from "$lib/wordSidebar.svelte"
+    import Generator from "$lib/generator.svelte"
+    import GenSettings from "$lib/genSettings.svelte"
 
     let wordList: Array<Array<String>>
 
@@ -12,29 +14,16 @@
         <p>Generate random phrases from word lists.</p>
     </div>
     <div class="content">
-        <WordSidebar bind:wordList/>
+        <div class="wordbar">
+            <WordSidebar bind:wordList/>
+        </div>
 
-        <div class="vibes">
-            <div class="gen-vibe">Generate vibe</div>
-            <div class="x5">x5</div>
-            <div class="x10">x10!</div>
+        <div class="gen">
+            <Generator />
         </div>
         
-        <div class="settings">
-            <p>Separator:</p>
-            <div class="indent">
-                <p>None</p>
-                <p>Space</p>
-                <p>Custom: <input></p>
-            </div>
-            <p>Casing:</p>
-            <div class="indent">
-                <p>Unchanged</p>
-                <p>camelCase</p>
-                <p>PascalCase</p>
-            </div>
-            <p>Share a link to this generator!</p>
-            <div class="copy-link">Copy link</div>
+        <div class="gensettings">
+            <GenSettings />
         </div>
     </div>
 
@@ -48,15 +37,15 @@
         flex-direction: column;
         gap: 20px;
     }
-    .vibes, .settings {
-        background: white;
-        border-radius: 20px;
-    }
-    .vibes {
+    .gen {
         width: 50%;
     }
-    .settings {
+    .wordbar, .gensettings {
         width: 25%;
+    }
+    .gen, .gensettings {
+        background: white;
+        border-radius: 20px;
     }
     .content {
         width: 100%;
