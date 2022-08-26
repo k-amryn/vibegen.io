@@ -1,0 +1,11 @@
+body, html {
+    margin: 0;
+    background: #E9E9E9;
+    font-family: 'Inter';
+    font-size: 1.05em;
+}
+
+h1, p {
+    font-weight: normal;
+    margin: 0;
+}
