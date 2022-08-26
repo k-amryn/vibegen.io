@@ -5,7 +5,32 @@ body, html {
     font-size: 1.05em;
 }
 
+@font-face {
+    font-family: Inter;
+    src: url('/inter-reg.woff2') format('woff2'),
+         url('/inter-reg.woff') format('woff')
+}
+
+@font-face {
+    font-family: JetBrainsMono;
+    src: url('/jetbrainsmono-reg.woff2') format('woff2'),
+         url('/jetbrainsmono-reg.woff') format('woff');
+}
+
 h1, p {
     font-weight: normal;
     margin: 0;
+}
+
+.button {
+    background: #DDDDDD;
+    box-sizing: border-box;
+    padding: 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
 }
