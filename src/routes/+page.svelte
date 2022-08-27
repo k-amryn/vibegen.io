@@ -19,7 +19,7 @@
         </div>
 
         <div class="gen">
-            <Generator />
+            <Generator bind:wordList/>
         </div>
         
         <div class="gensettings">
