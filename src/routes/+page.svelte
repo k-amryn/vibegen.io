@@ -2,7 +2,7 @@
     import Select from '../lib/select.svelte'
     import WordSidebar from "$lib/wordSidebar.svelte"
     import Generator from "$lib/generator.svelte"
-    import GenSettings from "$lib/genSettings.svelte"
+    import GenSettings from "$lib/gensettings.svelte"
 
     let wordList: Array<Array<String>>
 

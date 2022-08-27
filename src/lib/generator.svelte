@@ -10,9 +10,10 @@
         for (let i = 0; i < qty; i++) {
             let thisVibe: Array<String> = []
 
-            // there are 5 total lists
+            // 5 total lists
             for (let listIndex = 0; listIndex < 5; listIndex++) {
                 let currentList = wordList[listIndex]
+                // skip list if empty
                 if (currentList.length === 1 && currentList[0] == '') {
                     continue
                 }
