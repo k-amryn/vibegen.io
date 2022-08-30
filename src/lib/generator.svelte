@@ -1,34 +1,53 @@
 <script lang="ts">
     export let wordList: Array<Array<String>>
+    export let casing: String
+    export let separator: String
 
-    let vibes: Array<Array<String>> = [['vibes', 'appear', 'here']]
+    let vibesProcessed: Array<String> = ['Vibes Appear Here']
 
     // qty is the number of vibes being generated, i.e. from the x5 or x10 button
     function genVibe(qty: Number) {
-        console.log(wordList)
         let newVibes: Array<Array<String>> = []
         for (let i = 0; i < qty; i++) {
             let thisVibe: Array<String> = []
 
-            // 5 total lists
+            // 5 total lists, get random word from each list
             for (let listIndex = 0; listIndex < 5; listIndex++) {
                 let currentList = wordList[listIndex]
-                // skip list if empty
-                if (currentList.length === 1 && currentList[0] == '') {
-                    continue
+                if (currentList.length === 1 && currentList[0] === '') {
+                    continue // skip list if empty
                 }
                 thisVibe.push(currentList[randIndex(currentList.length)])
-                console.log("this is this vibe: ", thisVibe)
             }
             newVibes.unshift(thisVibe)
         }
-        vibes.unshift(...newVibes)
-        vibes = vibes
-        console.log("vibes: ", vibes)
+        processVibes(newVibes)
+    }
+
+    function processVibes(vibesRaw: Array<Array<String>>) {
+        vibesRaw.forEach((vibe) => {
+            let currentVibe = ""
+            vibe.forEach((word, i) => {
+                word = chooseCase(word, i)
+                if (i < vibe.length-1) word = `${word}${separator}`
+                currentVibe = `${currentVibe}${word}`
+            })
+            vibesProcessed.unshift(currentVibe)
+            vibesProcessed = vibesProcessed
+        })
     }
 
     function randIndex(length: number) {
         return Math.floor(Math.random() * length)
+    }
+
+    function chooseCase(vibeword: String, index: number): String {
+        if ((casing == "camel" && index == 0) || casing == "lower") {
+            return vibeword.charAt(0).toLowerCase() + vibeword.substring(1)
+        } else if (casing == "title" || casing == "camel") {
+            return vibeword.charAt(0).toUpperCase() + vibeword.substring(1)
+        }
+        return vibeword
     }
 </script>
 
@@ -51,12 +70,8 @@
     </div>
 
     <div class="vibes">
-        {#each vibes as vibe}
-        <p>
-            {#each vibe as vibeword}
-                <span>{vibeword}</span>
-            {/each}
-        </p>
+        {#each vibesProcessed as vibe}
+            <p>{vibe}</p>
         {/each}
     </div>
 </main>
@@ -72,6 +87,7 @@
         overflow: auto;
         position: relative;
         padding-top: 10px;
+        box-sizing: border-box;
     }
     .top-bar {
         display: flex;

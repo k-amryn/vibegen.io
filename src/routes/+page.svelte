@@ -5,6 +5,8 @@
     import GenSettings from "$lib/gensettings.svelte"
 
     let wordList: Array<Array<String>>
+    let casing: String = 'unchanged'
+    let separator: String = ''
 
 </script>
 
@@ -19,11 +21,11 @@
         </div>
 
         <div class="gen">
-            <Generator bind:wordList/>
+            <Generator bind:wordList bind:casing bind:separator/>
         </div>
         
         <div class="gensettings">
-            <GenSettings />
+            <GenSettings bind:casing bind:separator/>
         </div>
     </div>
 
