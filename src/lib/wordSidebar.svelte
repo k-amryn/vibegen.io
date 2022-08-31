@@ -1,14 +1,15 @@
 <script lang="ts">
-    let activeList = 0
-    let wordListRaw: Array<String> = [
-        '',
-        '',
-        '',
-        '',
-        ''
-    ]
+    import { onMount, tick } from 'svelte'
 
-    export let wordList: Array<Array<String>> = [[''], [''], [''], [''], ['']]
+    let activeList = 0
+    let wordListRaw: Array<String> = []
+
+    export let wordList: Array<Array<String>>
+
+    onMount(async () => {
+        await tick()
+        wordList.forEach((e, i) => wordListRaw[i] = e.join('\n'))
+    })
 
     function processInput() {
         wordList[activeList] = wordListRaw[activeList].split("\n")
@@ -54,6 +55,7 @@
 <style>
     textarea {
         font-family: JetBrainsMono, monospace;
+        font-size: 0.8em;
     }
     main {
         display: flex;

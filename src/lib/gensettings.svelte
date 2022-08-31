@@ -1,9 +1,13 @@
 <script lang="ts">
+    import { onMount, tick } from 'svelte'
+
     export let separator: String
-    export let casing: String = 'unchanged'
+    export let casing: String
 
     let separatorOption: String = 'none'
     let customSep: String = ''
+    let copyMessageDisplayed: boolean = false
+
     $: switch (separatorOption) {
         case 'none':
             separator = ''
@@ -14,6 +18,22 @@
         case 'custom':
             separator = customSep
             break
+    }
+
+    onMount(async () => {
+        await tick()
+        if (separator == " ") separatorOption = 'space'
+        if (separator != "" && separator != " ") {
+            separatorOption = 'custom'
+            customSep = separator
+        }
+    })
+
+    function copyLink() {
+        navigator.clipboard.writeText(window.location.href)
+        if (copyMessageDisplayed) return
+        copyMessageDisplayed = true
+        setTimeout(() => {copyMessageDisplayed = false}, 3000);
     }
 </script>
 
@@ -81,7 +101,17 @@
             </label>
         </p>
     </div>
-    <div class="button copy-link">Link to this generator!</div>
+    <div class="copy-section">
+        <div on:click={() => copyLink()} class="button copy-link">
+            Link to this generator!
+        </div>
+        {#if copyMessageDisplayed}
+            <div class="copy-message">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#72DA7D" height="20" width="20"><path d="M8 15h-.5l-.4-.4-3.5-3.4q-.4-.4-.3-1 0-.5.3-.9.4-.4 1-.4t1 .4L8 11.8l6.5-6.4q.4-.4.9-.4t1 .4q.3.4.3.9t-.4 1L9 14.5l-.4.3-.5.1Z"/></svg>
+                Link copied!
+            </div>
+        {/if}
+    </div>
 </main>
 
 <style>
@@ -106,9 +136,21 @@
         color: grey;
         background: white;
     }
+    .copy-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
     .copy-link {
+        width: 100%;
         margin-top: 20px;
         display: flex;
         justify-content: center;
+    }
+    .copy-message {
+        color: #72DA7D;
+        font-size: 0.8em;
+        display: flex;
+        align-items: center;
     }
 </style>

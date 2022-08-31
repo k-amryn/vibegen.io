@@ -3,11 +3,53 @@
     import WordSidebar from "$lib/wordSidebar.svelte"
     import Generator from "$lib/generator.svelte"
     import GenSettings from "$lib/gensettings.svelte"
+    import { onMount } from 'svelte'
 
-    let wordList: Array<Array<String>>
+    let wordList: Array<Array<String>> = [[''], [''], [''], [''], ['']]
     let casing: String = 'unchanged'
-    let separator: String = ''
+    let separator: string = ''
 
+    let isBrowser: boolean = typeof window == 'object'
+    let isLoaded: boolean = false
+
+    onMount(() => decodeURL())
+    $: if (isLoaded && (wordList || casing || separator)) encodeURL()
+
+    function decodeURL() {
+        const params = new URLSearchParams(window.location.search);
+        // each wordlist is stored in the url as a number between 0 and 4
+        for (let i = 0; i < 5; i++) {
+            let e = params.get(i.toString())
+            if (e != null) wordList[i] = e.split(';')
+        }
+        // @ts-ignore
+        if (params.get('case') != null) casing = params.get('case')
+        // @ts-ignore
+        if (params.get('sep') != null) separator = decodeURI(params.get('sep'))
+        isLoaded = true
+    }
+
+    // http://localhost:5173/?0=this;is;my;list;on;vibgene;asdfasdfasdf&2=gen;list;words
+    function encodeURL() {
+        let urlString = ''
+        let isFirst = true
+        for (let i = 0; i<5; i++) {
+            let li = wordList[i]
+            if (li.length == 1 && li[0] == '') continue
+            urlString += isFirst ? "?" : "&"
+            isFirst = false
+            urlString += `${i}=${li.join(";")}`
+        }
+        if (casing != "unchanged") {
+            urlString += isFirst ? "?" : "&"
+            urlString += `case=${casing}`
+        }
+        if (separator != "") {
+            urlString += isFirst ? "?" : "&"
+            urlString += `sep=${encodeURI(separator)}`
+        }
+        if (isBrowser) history.replaceState(null, '', `${window.location.origin}${urlString}`)
+    }
 </script>
 
 <main>
