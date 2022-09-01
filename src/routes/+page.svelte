@@ -19,15 +19,13 @@
         const params = new URLSearchParams(window.location.search);
         // each wordlist is stored in the url as a number between 0 and 4
         for (let i = 0; i < 5; i++) {
-            if (params.get(i.toString()) == null) continue
-            // @ts-ignore
-            let e: string = decodeURIComponent(params.get(i.toString()))
-            wordList[i] = e.split('~~')
+            let e = params.get(i.toString())
+            if (e != null) wordList[i] = e.split('~~')
         }
         // @ts-ignore
         if (params.get('case') != null) casing = params.get('case')
         // @ts-ignore
-        if (params.get('sep') != null) separator = decodeURIComponent(params.get('sep'))
+        if (params.get('sep') != null) separator = params.get('sep')
         isLoaded = true
     }
 
