@@ -19,17 +19,18 @@
         const params = new URLSearchParams(window.location.search);
         // each wordlist is stored in the url as a number between 0 and 4
         for (let i = 0; i < 5; i++) {
-            let e = params.get(i.toString())
-            if (e != null) wordList[i] = e.split(';')
+            if (params.get(i.toString()) == null) continue
+            // @ts-ignore
+            let e: string = decodeURIComponent(params.get(i.toString()))
+            wordList[i] = e.split('~~')
         }
         // @ts-ignore
         if (params.get('case') != null) casing = params.get('case')
         // @ts-ignore
-        if (params.get('sep') != null) separator = decodeURI(params.get('sep'))
+        if (params.get('sep') != null) separator = decodeURIComponent(params.get('sep'))
         isLoaded = true
     }
 
-    // http://localhost:5173/?0=this;is;my;list;on;vibgene;asdfasdfasdf&2=gen;list;words
     function encodeURL() {
         let urlString = ''
         let isFirst = true
@@ -38,7 +39,7 @@
             if (li.length == 1 && li[0] == '') continue
             urlString += isFirst ? "?" : "&"
             isFirst = false
-            urlString += `${i}=${li.join(";")}`
+            urlString += `${i}=${encodeURIComponent(li.join("~~"))}`
         }
         if (casing != "unchanged") {
             urlString += isFirst ? "?" : "&"
@@ -46,7 +47,7 @@
         }
         if (separator != "") {
             urlString += isFirst ? "?" : "&"
-            urlString += `sep=${encodeURI(separator)}`
+            urlString += `sep=${encodeURIComponent(separator)}`
         }
         if (isBrowser) history.replaceState(null, '', `${window.location.origin}${urlString}`)
     }
