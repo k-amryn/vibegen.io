@@ -182,3 +182,23 @@ main {
 	background: var(--surface);
 	border-radius: 20px;
 }
+
+/* ========== Global scrollbar styling ========== */
+/* WebKit-based browsers */
+*::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+*::-webkit-scrollbar-track {
+	background: var(--surface);
+}
+*::-webkit-scrollbar-thumb {
+	background-color: var(--border);
+	border-radius: 3px;
+}
+
+/* Firefox */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--border) var(--surface);
+}

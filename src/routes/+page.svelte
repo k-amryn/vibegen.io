@@ -6,7 +6,7 @@
 
 	let wordList: Array<Array<string>> = [[''], [''], [''], [''], ['']];
 	let casing = 'unchanged';
-	let separator = '';
+	let separator = ' ';
 
 	let isBrowser: boolean = typeof window == 'object';
 	let isLoaded = false;
@@ -42,7 +42,7 @@
 			urlString += isFirst ? '?' : '&';
 			urlString += `case=${casing}`;
 		}
-		if (separator != '') {
+		if (separator != ' ') {
 			urlString += isFirst ? '?' : '&';
 			urlString += `sep=${encodeURIComponent(separator)}`;
 		}
@@ -68,6 +68,9 @@
 			<GenSettings bind:casing bind:separator />
 		</div>
 	</div>
+	<div class="footer">
+		made with ♥ by <a href="https://github.com/k-amryn/vibegen.io">kamryn</a>
+	</div>
 </main>
 
 <style>
@@ -92,9 +95,12 @@
 	}
 	.content {
 		width: 100%;
-		height: 500px;
+		height: 700px;
 		display: flex;
 		justify-content: space-between;
 		gap: 20px;
+	}
+	.footer {
+		font-size: 0.7em;
 	}
 </style>

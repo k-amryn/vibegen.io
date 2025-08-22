@@ -4,6 +4,15 @@
 	let activeList = 0;
 	let wordListRaw: Array<string> = [];
 	let textareaElement: HTMLTextAreaElement;
+	let presets: Record<string, string> = {
+		Adjectives: 'vibe_adjectives',
+		'Everyday Nouns': 'everyday_nouns',
+		'Obscure Nouns': 'obscure_nouns',
+		'Musical Keys': 'musical_keys',
+		'Musical Instruments': 'instruments',
+		'Audio Processing': 'audio_processing'
+	};
+	let selectedPreset = '';
 
 	export let wordList: Array<Array<string>>;
 
@@ -24,6 +33,26 @@
 		const lineNumbersEl = document.querySelector(`#line-numbers-${activeList}`);
 		if (lineNumbersEl && textareaElement) {
 			lineNumbersEl.scrollTop = textareaElement.scrollTop;
+		}
+	}
+
+	async function applyPreset() {
+		if (selectedPreset && presets[selectedPreset]) {
+			try {
+				const response = await fetch(`/presets/${presets[selectedPreset]}.json`);
+				const presetItems: string[] = await response.json();
+
+				// Append preset items without duplicating existing entries
+				const existing = wordListRaw[activeList].split('\n').filter((l) => l.trim() !== '');
+				const toAdd = presetItems.filter((item) => !existing.includes(item));
+				wordListRaw[activeList] = [...existing, ...toAdd].join('\n');
+				processInput();
+			} catch (e) {
+				console.error(`Failed to load preset: ${selectedPreset}`, e);
+			} finally {
+				// Reset dropdown to placeholder
+				selectedPreset = '';
+			}
 		}
 	}
 </script>
@@ -60,7 +89,16 @@
 					on:input={processInput}
 					on:scroll={handleScroll}
 					spellcheck="false"
+					placeholder="One word per line, or choose a preset below."
 				/>
+			</div>
+			<div class="presets-dropdown">
+				<select bind:value={selectedPreset} on:change={applyPreset}>
+					<option value="">Preset word lists</option>
+					{#each Object.keys(presets) as preset}
+						<option value={preset}>{preset}</option>
+					{/each}
+				</select>
 			</div>
 			<div
 				class="button clear-words"
@@ -89,6 +127,7 @@
 		display: flex;
 		flex-direction: column;
 		height: 100%;
+		min-height: 0;
 	}
 	.wordbar-tabs {
 		height: 45px;
@@ -156,7 +195,9 @@
 	.wordlist-wrapper {
 		background: var(--surface);
 		border-radius: 20px 20px 20px 20px;
-		height: 100%;
+		flex: 1;
+		overflow-y: auto;
+		min-height: 0;
 	}
 	.wordlist {
 		position: relative;
@@ -179,6 +220,10 @@
 		border-radius: 10px;
 		overflow: hidden;
 		background: var(--surface);
+	}
+
+	.editor-container textarea {
+		scrollbar-width: thin;
 	}
 
 	.line-numbers {
@@ -212,9 +257,30 @@
 		border-radius: 0;
 		outline: none;
 		background: transparent;
+	}
+	textarea {
 		font-family: JetBrainsMono, monospace;
 		font-size: 0.8em;
 		line-height: 1.2;
 		color: var(--text);
+	}
+	.presets-dropdown {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+	}
+
+	.presets-dropdown select {
+		padding: 6px 8px;
+		border-radius: 6px;
+		border: 1px solid var(--border);
+		background: var(--surface);
+		color: var(--text);
+		font-family: inherit;
+	}
+
+	svg {
+		fill: var(--text);
 	}
 </style>

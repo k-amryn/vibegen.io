@@ -4,14 +4,11 @@
 	export let separator: string;
 	export let casing: string;
 
-	let separatorOption = 'none';
+	let separatorOption = 'space';
 	let customSep = '';
 	let copyMessageDisplayed = false;
 
 	$: switch (separatorOption) {
-		case 'none':
-			separator = '';
-			break;
 		case 'space':
 			separator = ' ';
 			break;
@@ -42,12 +39,6 @@
 <main>
 	<p>Separator:</p>
 	<div class="indent">
-		<p>
-			<label>
-				<input type="radio" name="separator" bind:group={separatorOption} value={'none'} />
-				None
-			</label>
-		</p>
 		<p>
 			<label>
 				<input type="radio" name="separator" bind:group={separatorOption} value={'space'} />
@@ -94,7 +85,19 @@
 		</p>
 	</div>
 	<div class="copy-section">
-		<div on:click={() => copyLink()} class="button copy-link">Link to this generator!</div>
+		<div on:click={() => copyLink()} class="button copy-link">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				height="24px"
+				viewBox="0 -960 960 960"
+				width="24px"
+				fill="var(--text)"
+				><path
+					d="M280-280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h120q17 0 28.5 11.5T440-640q0 17-11.5 28.5T400-600H280q-50 0-85 35t-35 85q0 50 35 85t85 35h120q17 0 28.5 11.5T440-320q0 17-11.5 28.5T400-280H280Zm80-160q-17 0-28.5-11.5T320-480q0-17 11.5-28.5T360-520h240q17 0 28.5 11.5T640-480q0 17-11.5 28.5T600-440H360Zm200 160q-17 0-28.5-11.5T520-320q0-17 11.5-28.5T560-360h120q50 0 85-35t35-85q0-50-35-85t-85-35H560q-17 0-28.5-11.5T520-640q0-17 11.5-28.5T560-680h120q83 0 141.5 58.5T880-480q0 83-58.5 141.5T680-280H560Z"
+				/></svg
+			>
+			Link to this generator
+		</div>
 		{#if copyMessageDisplayed}
 			<div class="copy-message">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="#72DA7D" height="20" width="20"
@@ -114,10 +117,21 @@
 		border-radius: 20px;
 		height: 100%;
 		box-sizing: border-box;
-		padding: 10px;
+		padding: 20px;
+		line-height: 1.5;
 	}
 	.indent {
 		margin-left: 20px;
+		margin-bottom: 20px;
+	}
+
+	.indent p {
+		margin-bottom: 12px;
+	}
+
+	main > p {
+		margin-bottom: 8px;
+		font-weight: 500;
 	}
 	.custom-sep-input {
 		width: 50px;
@@ -134,6 +148,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		margin-top: 24px;
 	}
 	.copy-link {
 		width: 100%;
