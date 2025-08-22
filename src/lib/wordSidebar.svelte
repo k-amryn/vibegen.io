@@ -5,7 +5,7 @@
 	let wordListRaw: Array<string> = [];
 	let textareaElement: HTMLTextAreaElement;
 	let presets: Record<string, string> = {
-		Adjectives: 'vibe_adjectives',
+		Adjectives: 'adjectives',
 		'Everyday Nouns': 'everyday_nouns',
 		'Obscure Nouns': 'obscure_nouns',
 		'Musical Keys': 'musical_keys',
