@@ -28,7 +28,7 @@
 <style>
 	main {
 		height: 100vh;
-		max-width: 1000px;
+		max-width: 1500px;
 		padding: 10px;
 		box-sizing: border-box;
 		margin: auto;

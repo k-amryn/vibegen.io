@@ -37,6 +37,38 @@
 </script>
 
 <main>
+	<div class="copy-section">
+		<span class="copy-info">Share a link to this generator:</span>
+		{#if !copyMessageDisplayed}
+			<div on:click={() => copyLink()} class="button copy-link">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					height="24px"
+					viewBox="0 -960 960 960"
+					width="24px"
+					fill="var(--text)"
+					><path
+						d="M280-280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h120q17 0 28.5 11.5T440-640q0 17-11.5 28.5T400-600H280q-50 0-85 35t-35 85q0 50 35 85t85 35h120q17 0 28.5 11.5T440-320q0 17-11.5 28.5T400-280H280Zm80-160q-17 0-28.5-11.5T320-480q0-17 11.5-28.5T360-520h240q17 0 28.5 11.5T640-480q0 17-11.5 28.5T600-440H360Zm200 160q-17 0-28.5-11.5T520-320q0-17 11.5-28.5T560-360h120q50 0 85-35t35-85q0-50-35-85t-85-35H560q-17 0-28.5-11.5T520-640q0-17 11.5-28.5T560-680h120q83 0 141.5 58.5T880-480q0 83-58.5 141.5T680-280H560Z"
+					/></svg
+				>
+				Copy link
+			</div>
+		{:else}
+			<div class="button copy-link copied">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					height="24px"
+					viewBox="0 -960 960 960"
+					width="24px"
+					fill="var(--text)"
+					><path
+						d="M280-280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h120q17 0 28.5 11.5T440-640q0 17-11.5 28.5T400-600H280q-50 0-85 35t-35 85q0 50 35 85t85 35h120q17 0 28.5 11.5T440-320q0 17-11.5 28.5T400-280H280Zm80-160q-17 0-28.5-11.5T320-480q0-17 11.5-28.5T360-520h240q17 0 28.5 11.5T640-480q0 17-11.5 28.5T600-440H360Zm200 160q-17 0-28.5-11.5T520-320q0-17 11.5-28.5T560-360h120q50 0 85-35t35-85q0-50-35-85t-85-35H560q-17 0-28.5-11.5T520-640q0-17 11.5-28.5T560-680h120q83 0 141.5 58.5T880-480q0 83-58.5 141.5T680-280H560Z"
+					/></svg
+				>
+				Link copied
+			</div>
+		{/if}
+	</div>
 	<p>Separator:</p>
 	<div class="indent">
 		<p>
@@ -84,31 +116,6 @@
 			</label>
 		</p>
 	</div>
-	<div class="copy-section">
-		<div on:click={() => copyLink()} class="button copy-link">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				height="24px"
-				viewBox="0 -960 960 960"
-				width="24px"
-				fill="var(--text)"
-				><path
-					d="M280-280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h120q17 0 28.5 11.5T440-640q0 17-11.5 28.5T400-600H280q-50 0-85 35t-35 85q0 50 35 85t85 35h120q17 0 28.5 11.5T440-320q0 17-11.5 28.5T400-280H280Zm80-160q-17 0-28.5-11.5T320-480q0-17 11.5-28.5T360-520h240q17 0 28.5 11.5T640-480q0 17-11.5 28.5T600-440H360Zm200 160q-17 0-28.5-11.5T520-320q0-17 11.5-28.5T560-360h120q50 0 85-35t35-85q0-50-35-85t-85-35H560q-17 0-28.5-11.5T520-640q0-17 11.5-28.5T560-680h120q83 0 141.5 58.5T880-480q0 83-58.5 141.5T680-280H560Z"
-				/></svg
-			>
-			Link to this generator
-		</div>
-		{#if copyMessageDisplayed}
-			<div class="copy-message">
-				<svg xmlns="http://www.w3.org/2000/svg" fill="#72DA7D" height="20" width="20"
-					><path
-						d="M8 15h-.5l-.4-.4-3.5-3.4q-.4-.4-.3-1 0-.5.3-.9.4-.4 1-.4t1 .4L8 11.8l6.5-6.4q.4-.4.9-.4t1 .4q.3.4.3.9t-.4 1L9 14.5l-.4.3-.5.1Z"
-					/></svg
-				>
-				Link copied!
-			</div>
-		{/if}
-	</div>
 </main>
 
 <style>
@@ -133,6 +140,9 @@
 		margin-bottom: 8px;
 		font-weight: 500;
 	}
+	input[type='radio'] {
+		accent-color: var(--accent-color);
+	}
 	.custom-sep-input {
 		width: 50px;
 		font-size: 1em;
@@ -147,19 +157,18 @@
 	.copy-section {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
-		margin-top: 24px;
+		margin-bottom: 24px;
 	}
 	.copy-link {
 		width: 100%;
-		margin-top: 20px;
+		margin-top: 10px;
 		display: flex;
 		justify-content: center;
 	}
-	.copy-message {
-		color: #72da7d;
-		font-size: 0.8em;
-		display: flex;
-		align-items: center;
+	.copy-link.copied {
+		color: #31ba40;
+	}
+	.copy-link.copied svg {
+		fill: #31ba40;
 	}
 </style>

@@ -12,7 +12,7 @@
 	--surface: #ffffff;
 	--text: #0a0a0a;
 	--muted: #555555;
-	--accent: #4f46e5; /* Indigo-600 */
+	--accent: #7b9aca; /* Indigo-600 */
 	--button-bg: #dddddd;
 	--button-text: #0a0a0a;
 	--border: rgba(10, 10, 10, 0.08);
@@ -35,7 +35,7 @@
 		--surface: #0f1724; /* slightly lighter than background */
 		--text: #e6eef8;
 		--muted: #9ca3af;
-		--accent: #7c3aed; /* lighter indigo for contrast */
+		--accent: #4970af; /* lighter indigo for contrast */
 		--button-bg: #1f2937;
 		--button-text: #e6eef8;
 		--border: rgba(255, 255, 255, 0.06);
