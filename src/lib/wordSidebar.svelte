@@ -89,7 +89,7 @@
 					on:input={processInput}
 					on:scroll={handleScroll}
 					spellcheck="false"
-					placeholder="One word per line, or choose a preset below."
+					placeholder="One word per line, or choose a preset below. Hint: Ask an AI for a newline-separated list of words."
 				/>
 			</div>
 			<div class="presets-dropdown">
