@@ -56,7 +56,7 @@
 <main>
 	<div class="header">
 		<h1>vibegen.io</h1>
-		<p>Generate random phrases from word lists.</p>
+		<p>Generate vibes from lists of words.</p>
 	</div>
 
 	<div class="mobile-nav">
